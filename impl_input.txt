@@ -3,11 +3,13 @@
 n=5;
 result=1;
 
-while(n!=0){
+while(n==5){
   result=result*n;
   n=n+(-1);
+
 }
 
 
-output result -(3);
+output result;
+
 

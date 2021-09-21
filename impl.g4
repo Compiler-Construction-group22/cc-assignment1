@@ -5,13 +5,13 @@ grammar impl;
 start   :  cs+=command* EOF ;
 
 program : c=command                      # SingleCommand
-	| '{' cs+=command* '}'           # MultipleCommands
+	| '{' cs+=command* '}'               # MultipleCommands
 	;
 	
 command : x=ID '=' e=expr ';'	             # Assignment
 	| 'output' e=expr ';'                    # Output
     | 'while' '('c=condition')' p=program    # WhileLoop
-   // | 'while' '('c=condition')' p=program    # ForLoop
+//    | 'for' '(' dec=NUM ',' c=condition ',' inc=NUM ')' p=program    # ForLoop
     | 'if' '('c=condition')' p=program       # IfStatement
 	;
 	
@@ -24,11 +24,11 @@ expr	:  e1=expr '*' e2=expr          # Multiplication
 	| '(' e=expr ')'                    # Parenthesis
 	;
 
-condition : e1=expr '!=' e2=expr # Unequal
-    | e1=expr '==' e2=expr  # Equal
-    | e1=expr '>' e2=expr   # GreaterThan
-    | e1=expr '<' e2=expr   # LessThan
-    | e1=condition '||' e2=condition   # OrBinary
+condition : e1=expr '!=' e2=expr         # Unequal
+    | e1=expr '==' e2=expr               # Equal
+    | e1=expr '>' e2=expr                # GreaterThan
+    | e1=expr '<' e2=expr                # LessThan
+    | e1=condition '||' e2=condition     # OrBinary
 
 	;
 
@@ -37,6 +37,7 @@ FLOAT :  NUM+ ('.' NUM+)? ;
 
 ALPHA : [a-zA-Z_ÆØÅæøå] ;
 NUM   : [0-9] ;
+
 
 WHITESPACE : [ \n\t\r]+ -> skip;
 COMMENT    : '//'~[\n]*  -> skip;

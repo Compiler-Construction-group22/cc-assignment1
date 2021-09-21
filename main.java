@@ -1,3 +1,4 @@
+import jdk.dynalink.Operation;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
@@ -100,12 +101,19 @@ class AstMaker extends AbstractParseTreeVisitor<AST> implements implVisitor<AST>
     }
 
 
-	public AST visitSubtraction(implParser.SubtractionContext ctx) {
-		return new Subtraction((Expr) visit(ctx.e1), (Expr)visit(ctx.e2));	}
-	;
+//	public AST visitSubtraction(implParser.SubtractionContext ctx) {
+//		return new Subtraction((Expr) visit(ctx.e1), (Expr)visit(ctx.e2));	}
+//	;
     
     public AST visitAddition(implParser.AdditionContext ctx){
-	return new Addition((Expr) visit(ctx.e1), (Expr)visit(ctx.e2));
+
+    	if (ctx.op.getText().equals("-")) {
+			return new Subtraction((Expr) visit(ctx.e1), (Expr)visit(ctx.e2));
+
+		} else  {
+			return new Addition((Expr) visit(ctx.e1), (Expr)visit(ctx.e2));
+		}
+
     };
 
     public AST visitMultiplication(implParser.MultiplicationContext ctx){

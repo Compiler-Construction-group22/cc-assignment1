@@ -101,18 +101,6 @@ public interface implListener extends ParseTreeListener {
 	 */
 	void exitParenthesis(implParser.ParenthesisContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code Addition}
-	 * labeled alternative in {@link implParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterAddition(implParser.AdditionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code Addition}
-	 * labeled alternative in {@link implParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitAddition(implParser.AdditionContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code Multiplication}
 	 * labeled alternative in {@link implParser#expr}.
 	 * @param ctx the parse tree
@@ -125,6 +113,18 @@ public interface implListener extends ParseTreeListener {
 	 */
 	void exitMultiplication(implParser.MultiplicationContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code Addition}
+	 * labeled alternative in {@link implParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterAddition(implParser.AdditionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Addition}
+	 * labeled alternative in {@link implParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitAddition(implParser.AdditionContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code Variable}
 	 * labeled alternative in {@link implParser#expr}.
 	 * @param ctx the parse tree
@@ -136,18 +136,6 @@ public interface implListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitVariable(implParser.VariableContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code Subtraction}
-	 * labeled alternative in {@link implParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterSubtraction(implParser.SubtractionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code Subtraction}
-	 * labeled alternative in {@link implParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitSubtraction(implParser.SubtractionContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code Constant}
 	 * labeled alternative in {@link implParser#expr}.

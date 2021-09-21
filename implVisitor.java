@@ -65,13 +65,6 @@ public interface implVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitParenthesis(implParser.ParenthesisContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Addition}
-	 * labeled alternative in {@link implParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAddition(implParser.AdditionContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code Multiplication}
 	 * labeled alternative in {@link implParser#expr}.
 	 * @param ctx the parse tree
@@ -79,19 +72,19 @@ public interface implVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMultiplication(implParser.MultiplicationContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code Addition}
+	 * labeled alternative in {@link implParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAddition(implParser.AdditionContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code Variable}
 	 * labeled alternative in {@link implParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitVariable(implParser.VariableContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code Subtraction}
-	 * labeled alternative in {@link implParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitSubtraction(implParser.SubtractionContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Constant}
 	 * labeled alternative in {@link implParser#expr}.

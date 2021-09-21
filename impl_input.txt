@@ -9,7 +9,7 @@ while(n!=0){
 }
 
 if(result != 120.0 || result == 120.0) {
-result = 4;
+result = result-4;
 }
 
 

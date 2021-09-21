@@ -5,13 +5,13 @@ result=1;
 
 while(n!=0){
   result=result*n;
-  n=n+(-1);
+  n=n-1;
 }
 
-
-if(result != 120.0 ||) {
+if(result != 120.0 || result == 120.0) {
 result = 4;
 }
+
 
 output result;
 

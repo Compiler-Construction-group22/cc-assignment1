@@ -27,6 +27,7 @@ condition : e1=expr '!=' e2=expr # Unequal
     | e1=expr '==' e2=expr  # Equal
     | e1=expr '>' e2=expr   # GreaterThan
     | e1=expr '<' e2=expr   # LessThan
+    | e1=condition '||' e2=condition   # OrBinary
 
 	;
 

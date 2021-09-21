@@ -11,6 +11,7 @@ program : c=command                      # SingleCommand
 command : x=ID '=' e=expr ';'	         # Assignment
 	| 'output' e=expr ';'            # Output
     | 'while' '('c=condition')' p=program  # WhileLoop
+    | 'if' '('c=condition')' p=program  # IfStatement
 	;
 	
 expr	: e1=expr '+' e2=expr # Addition
@@ -25,6 +26,8 @@ expr	: e1=expr '+' e2=expr # Addition
 condition : e1=expr '!=' e2=expr # Unequal
     | e1=expr '==' e2=expr  # Equal
     | e1=expr '>' e2=expr   # GreaterThan
+    | e1=expr '<' e2=expr   # LessThan
+
 	;
 
 ID    : ALPHA (ALPHA|NUM)* ;

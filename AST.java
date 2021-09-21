@@ -109,6 +109,22 @@ class While extends Command{
     }
 }
 
+
+
+class IfStatement extends Command{
+    Condition c;
+    Command body;
+    IfStatement(Condition c, Command body){
+        this.c=c; this.body=body;
+    }
+    public void eval(Environment env){
+        if (c.eval(env)) {
+            body.eval(env);
+        }
+    }
+}
+
+
 abstract class Condition extends AST{
     abstract public Boolean eval(Environment env);
 }
@@ -133,3 +149,66 @@ class Equal extends Condition{
     }
 
 }
+
+
+class GreaterThan extends Condition{
+    Expr e1,e2;
+    GreaterThan(Expr e1,Expr e2){
+        this.e1=e1; this.e2=e2;
+    }
+
+    public Boolean eval(Environment env){
+
+        boolean result = false;
+        if (e1.eval(env) > e2.eval(env)) {
+            result = true;
+        }
+
+        return result;
+    }
+
+}
+
+
+
+class LessThan extends Condition{
+    Expr e1,e2;
+    LessThan(Expr e1,Expr e2){
+        this.e1=e1; this.e2=e2;
+    }
+
+    public Boolean eval(Environment env){
+        boolean result = false;
+        if (e1.eval(env) < e2.eval(env)) {
+            result = true;
+        }
+        return result;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

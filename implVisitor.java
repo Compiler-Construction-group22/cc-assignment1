@@ -51,6 +51,13 @@ public interface implVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitWhileLoop(implParser.WhileLoopContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code IfStatement}
+	 * labeled alternative in {@link implParser#command}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfStatement(implParser.IfStatementContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code Parenthesis}
 	 * labeled alternative in {@link implParser#expr}.
 	 * @param ctx the parse tree
@@ -113,4 +120,18 @@ public interface implVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitEqual(implParser.EqualContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code GreaterThan}
+	 * labeled alternative in {@link implParser#condition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGreaterThan(implParser.GreaterThanContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code LessThan}
+	 * labeled alternative in {@link implParser#condition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLessThan(implParser.LessThanContext ctx);
 }

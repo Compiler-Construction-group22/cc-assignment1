@@ -11,14 +11,14 @@ program : c=command                      # SingleCommand
 command : x=ID '=' e=expr ';'	             # Assignment
 	| 'output' e=expr ';'                    # Output
     | 'while' '('c=condition')' p=program    # WhileLoop
-//    | 'for' '(' dec=NUM ',' c=condition ',' inc=NUM ')' p=program    # ForLoop
+    | 'for' '(i=' i=expr '..' n=expr ')' p=program    # ForLoop
     | 'if' '('c=condition')' p=program       # IfStatement
 	;
 	
 expr	:  e1=expr '*' e2=expr          # Multiplication
 	| e1=expr '/' e2=expr               # Division
 	| e1=expr  op=('+' | '-') e2=expr   # Addition
-	| c=FLOAT     	                    # Constant
+	| c= FLOAT     	                    # Constant
 //	| e1=expr '-' e2=expr # Subtraction
 	| x=ID		                        # Variable
 	| '(' e=expr ')'                    # Parenthesis
@@ -33,7 +33,7 @@ condition : e1=expr '!=' e2=expr         # Unequal
 	;
 
 ID    : ALPHA (ALPHA|NUM)* ;
-FLOAT :  NUM+ ('.' NUM+)? ;
+FLOAT : NUM+ ('.' NUM+)? ;
 
 ALPHA : [a-zA-Z_ÆØÅæøå] ;
 NUM   : [0-9] ;

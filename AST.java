@@ -3,6 +3,7 @@ public abstract class AST{
 
 abstract class Expr extends AST{
     abstract public Double eval(Environment env);
+
 }
 
 class Addition extends Expr{
@@ -109,6 +110,31 @@ class While extends Command{
     public void eval(Environment env){
 	while (c.eval(env))
 	    body.eval(env);
+    }
+}
+
+
+
+class Forloop extends Command{
+    Expr i;
+    Expr n;
+    Command body;
+    Forloop(Expr i, Expr n, Command body){
+        this.i=i;
+        this.n = n;
+        this.body=body;
+    }
+    public void eval(Environment env){
+        double cont = i.eval(env);
+        int counter = (int) cont;
+
+        double until = n.eval(env);
+        int untilInt = (int) until;
+
+        for (int j = counter; j <untilInt ; j++) {
+            body.eval(env);
+        }
+
     }
 }
 

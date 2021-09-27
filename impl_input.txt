@@ -9,8 +9,14 @@ while(n!=0){
 }
 
 if(result != 120.0 || result == 120.0) {
-result = result-4;
+result = 0;
 }
+
+for(i=3..5) {
+
+result = result + 1;
+}
+
 
 
 output result;

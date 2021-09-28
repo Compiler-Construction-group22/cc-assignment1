@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class AST{
 };
 
@@ -116,8 +119,7 @@ class While extends Command{
 
 
 class Forloop extends Command{
-    Expr i;
-    Expr n;
+    Expr i, n;
     Command body;
     Forloop(Expr i, Expr n, Command body){
         this.i=i;
@@ -137,6 +139,56 @@ class Forloop extends Command{
 
     }
 }
+
+class Array extends Command{
+    Expr arrName;
+    Expr index, value;
+    List list = new ArrayList();
+
+    ArrayList<Double> dList = new ArrayList<>();
+    ArrayList<Integer> listStr = new ArrayList<>();
+
+
+    Array(Expr arrName, Expr index, Expr value){
+        this.arrName = arrName;
+        this.index = index;
+        this.value = value;
+    }
+
+
+
+
+    public void eval(Environment env){
+        if (!value.eval(env).equals("")) {
+            if (!value.eval(env).isNaN()) {
+                int iIndex = (int) Math.round(index.eval(env));
+                if (iIndex < dList.size()){
+                    dList.add(iIndex, value.eval(env));
+
+                } else {dList.add(value.eval(env));}
+
+
+                for (Double i :dList) {
+                    System.out.println(i);
+                }
+                System.out.println();
+            }
+
+        }
+    }
+
+
+
+}
+
+
+
+
+
+
+
+
+
 
 
 

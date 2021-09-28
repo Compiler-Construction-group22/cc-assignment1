@@ -101,6 +101,18 @@ public interface implListener extends ParseTreeListener {
 	 */
 	void exitIfStatement(implParser.IfStatementContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code Array}
+	 * labeled alternative in {@link implParser#command}.
+	 * @param ctx the parse tree
+	 */
+	void enterArray(implParser.ArrayContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Array}
+	 * labeled alternative in {@link implParser#command}.
+	 * @param ctx the parse tree
+	 */
+	void exitArray(implParser.ArrayContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code Parenthesis}
 	 * labeled alternative in {@link implParser#expr}.
 	 * @param ctx the parse tree

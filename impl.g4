@@ -8,12 +8,12 @@ program : c=command                      # SingleCommand
 	| '{' cs+=command* '}'               # MultipleCommands
 	;
 	
-command : x=ID '=' e=expr ';'	                        # Assignment
-	| 'output' e=expr ';'                               # Output
-    | 'while' '('c=condition')' p=program               # WhileLoop
+command : x=ID '=' e=expr ';'	                                 # Assignment
+	| 'output' e=expr ';'                                         # Output
+    | 'while' '('c=condition')' p=program                        # WhileLoop
     | 'for' '(' s=ID '=' e1=expr '..' e2=expr ')' p=program      # ForLoop
-    | 'if' '('c=condition')' p=program                  # IfStatement
-    | name=expr '[' index=expr ']' ('='val=expr';')?               # Array
+    | 'if' '('c=condition')' p=program                          # IfStatement
+    | s=ID '[' index=expr ']' ('='val=expr';')                   # Array
 	;
 	
 expr	:  e1=expr '*' e2=expr          # Multiplication
@@ -23,6 +23,7 @@ expr	:  e1=expr '*' e2=expr          # Multiplication
 //	| e1=expr '-' e2=expr # Subtraction
 	| x=ID		                        # Variable
 	| '(' e=expr ')'                    # Parenthesis
+	| s=ID '[' index=expr ']'                                   #ArrayRead
 	;
 
 condition : e1=expr '!=' e2=expr         # Unequal

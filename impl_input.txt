@@ -1,42 +1,39 @@
 /* Example program for the imperative language impl */
 
-n=0;
+    n=0;
 
-result=0;
-/*
-while(n!=0){
-  result=result*n;
+    result=0;
 
 
-  n=n-1;
-}
+    while(n!=0){
+      result=result*n;
+      n=n-1;
+    }
 
-if(result != 120.0 || result == 120.0) {
-result = 0;
-}
-*/
-
-for(i=0..2) {
-
-for(j=0..1){
-result = result + i;
-}
+    if(result != 120.0 || result == 120.0) {
+    result = 0;
+    }
 
 
-}
+    for(i=0..2) {
 
-/*
-while(n!=4) {
-a[n]=1;
-n= n+1;
-}
+      a[i]=i;
+    }
 
-n= 0;
-while(n!=4) {
-a[n]=2;
-n= n+1;
-}*/
+    result = a[0];
+
+    /*
+    while(n!=4) {
+    a[n]=1;
+    n= n+1;
+    }
+
+    n= 0;
+    while(n!=4) {
+    a[n]=2;
+    n= n+1;
+    }*/
 
 
-output result;
+    output result;
 

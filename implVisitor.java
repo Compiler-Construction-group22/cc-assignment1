@@ -114,6 +114,13 @@ public interface implVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDivision(implParser.DivisionContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ArrayRead}
+	 * labeled alternative in {@link implParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArrayRead(implParser.ArrayReadContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code Unequal}
 	 * labeled alternative in {@link implParser#condition}.
 	 * @param ctx the parse tree

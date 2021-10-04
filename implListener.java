@@ -185,6 +185,18 @@ public interface implListener extends ParseTreeListener {
 	 */
 	void exitDivision(implParser.DivisionContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ArrayRead}
+	 * labeled alternative in {@link implParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterArrayRead(implParser.ArrayReadContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ArrayRead}
+	 * labeled alternative in {@link implParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitArrayRead(implParser.ArrayReadContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code Unequal}
 	 * labeled alternative in {@link implParser#condition}.
 	 * @param ctx the parse tree

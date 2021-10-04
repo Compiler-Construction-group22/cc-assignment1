@@ -121,6 +121,13 @@ public class implBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements i
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitArrayRead(implParser.ArrayReadContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitUnequal(implParser.UnequalContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

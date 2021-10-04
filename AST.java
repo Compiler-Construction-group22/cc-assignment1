@@ -1,11 +1,12 @@
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
 public abstract class AST{
 };
 
 abstract class Expr extends AST{
     abstract public Double eval(Environment env);
+
 
 }
 
@@ -146,49 +147,39 @@ class Forloop extends Command{
 }
 
 class Array extends Command{
-    Expr arrName;
+    String arrName;
     Expr index, value;
-    List list = new ArrayList();
 
-    ArrayList<Double> dList = new ArrayList<>();
-    ArrayList<Integer> listStr = new ArrayList<>();
-
-
-    Array(Expr arrName, Expr index, Expr value){
+    Array(String arrName, Expr index, Expr value){
         this.arrName = arrName;
         this.index = index;
         this.value = value;
     }
 
-
-
-
     public void eval(Environment env){
-        if (!value.eval(env).equals("")) {
-            if (!value.eval(env).isNaN()) {
-                int iIndex = (int) Math.round(index.eval(env));
-                if (iIndex < dList.size()){
-                    dList.add(iIndex, value.eval(env));
-
-                } else {dList.add(value.eval(env));}
-
-
-                for (Double i :dList) {
-                    System.out.println(i);
-                }
-                System.out.println();
-            }
-
-        }
+        String arrNameWithIndex = arrName +"[" + index.eval(env).intValue() + "]";
+        env.setVariable(arrNameWithIndex, value.eval(env));
     }
-
-
 
 }
 
 
 
+class ArrayRead extends Expr{
+    String arrName;
+    Expr index;
 
+    ArrayRead(String arrName, Expr index){
+        this.arrName = arrName;
+        this.index = index;
+    }
+
+    public Double eval(Environment env){
+
+        String arrNameWithIndex = arrName +"[" + index.eval(env).intValue() + "]";
+        return env.getVariable(arrNameWithIndex);
+    }
+}
 
 
 

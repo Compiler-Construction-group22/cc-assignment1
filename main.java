@@ -99,12 +99,19 @@ class AstMaker extends AbstractParseTreeVisitor<AST> implements implVisitor<AST>
 
 	public AST visitArray(implParser.ArrayContext ctx){
 
-		Expr array = (Expr) visit(ctx.name);
+		String s = ctx.s.getText();
 		Expr index = (Expr)visit(ctx.index);
 		Expr value = (Expr)visit(ctx.val);
 
+		return new Array(s, index, value);
+	}
 
-		return new Array(array, index, value);
+	public AST visitArrayRead(implParser.ArrayReadContext ctx){
+
+		String s = ctx.s.getText();
+		Expr index = (Expr)visit(ctx.index);
+
+		return new ArrayRead(s, index);
 	}
 
 

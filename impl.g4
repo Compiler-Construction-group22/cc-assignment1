@@ -31,7 +31,7 @@ condition : e1=expr '!=' e2=expr         # Unequal
     | e1=expr '>' e2=expr                # GreaterThan
     | e1=expr '<' e2=expr                # LessThan
     | e1=condition '||' e2=condition     # OrBinary
-
+    | c1=condition '&&' c2=condition      # AndBinary
 	;
 
 ID    : ALPHA (ALPHA|NUM)* ;

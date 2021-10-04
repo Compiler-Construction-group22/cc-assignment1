@@ -135,6 +135,13 @@ public interface implVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLessThan(implParser.LessThanContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code AndBinary}
+	 * labeled alternative in {@link implParser#condition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAndBinary(implParser.AndBinaryContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code Equal}
 	 * labeled alternative in {@link implParser#condition}.
 	 * @param ctx the parse tree

@@ -221,6 +221,18 @@ public interface implListener extends ParseTreeListener {
 	 */
 	void exitLessThan(implParser.LessThanContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code AndBinary}
+	 * labeled alternative in {@link implParser#condition}.
+	 * @param ctx the parse tree
+	 */
+	void enterAndBinary(implParser.AndBinaryContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code AndBinary}
+	 * labeled alternative in {@link implParser#condition}.
+	 * @param ctx the parse tree
+	 */
+	void exitAndBinary(implParser.AndBinaryContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code Equal}
 	 * labeled alternative in {@link implParser#condition}.
 	 * @param ctx the parse tree

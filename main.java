@@ -213,5 +213,14 @@ class AstMaker extends AbstractParseTreeVisitor<AST> implements implVisitor<AST>
 	}
 
 
+	public AST visitAndBinary(implParser.AndBinaryContext ctx){
+
+		Condition c1= (Condition) visit(ctx.c1);
+		Condition c2= (Condition) visit(ctx.c2);
+
+		return new AndBinary(c1,c2);
+	}
+
+
 }
 

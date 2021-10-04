@@ -283,6 +283,22 @@ class OrBinary extends Condition{
 }
 
 
+class AndBinary extends Condition{
+    Condition c1,c2;
+    AndBinary(Condition c1,Condition c2){
+        this.c1=c1; this.c2=c2;
+    }
+
+    public Boolean eval(Environment env){
+        boolean result = false;
+        if (c1.eval(env) && c2.eval(env)) {
+            result = true;
+        }
+        return result;
+    }
+}
+
+
 
 
 

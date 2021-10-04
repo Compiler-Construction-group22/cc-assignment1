@@ -83,17 +83,16 @@ class AstMaker extends AbstractParseTreeVisitor<AST> implements implVisitor<AST>
 	Command body=(Command)visit(ctx.p);
 	return new While(c,body);
     }
+
+
 	public AST visitForLoop(implParser.ForLoopContext ctx){
 
-//		int i =Integer.parseInt(String.valueOf(visit((ParseTree) ctx.i)));
-//		int n =Integer.parseInt(String.valueOf(visit((ParseTree) ctx.n)));
-//		System.out.println(n);
-
-		Expr i = (Expr)visit(ctx.i);
-		Expr n = (Expr)visit(ctx.n);
+		String str = ctx.s.getText();
+		Expr e1 = (Expr)visit(ctx.e1);
+		Expr e2 = (Expr)visit(ctx.e2);
 		Command body=(Command)visit(ctx.p);
 
-		return new Forloop(i, n, body);
+		return new Forloop(str, e1, e2, body);
 	}
 
 

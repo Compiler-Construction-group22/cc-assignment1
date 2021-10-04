@@ -119,21 +119,26 @@ class While extends Command{
 
 
 class Forloop extends Command{
-    Expr i, n;
+    String str;
+    Expr e1, e2;
     Command body;
-    Forloop(Expr i, Expr n, Command body){
-        this.i=i;
-        this.n = n;
+    Forloop(String str, Expr e1, Expr e2, Command body){
+        this.str = str;
+        this.e1 = e1;
+        this.e2 = e2;
         this.body=body;
     }
     public void eval(Environment env){
-        double cont = i.eval(env);
-        int counter = (int) cont;
 
-        double until = n.eval(env);
-        int untilInt = (int) until;
+        //new Assignment(str, e1);
+        double e1Double = e1.eval(env);
+        int e1Int = (int) e1Double;
 
-        for (int j = counter; j <untilInt ; j++) {
+        double e2Double = e2.eval(env);
+        int e2Int = (int) e2Double;
+
+        for (int i = e1Int; i <= e2Int ; i++) {
+            env.setVariable(str, (double) i);
             body.eval(env);
         }
 

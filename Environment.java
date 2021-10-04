@@ -3,7 +3,8 @@ import java.util.Map.Entry;
 
 class Environment {
     private HashMap<String,Double> variableValues = new HashMap<String,Double>();
-    public Environment() { }	
+    //public Environment() { }
+
     public void setVariable(String name, Double value) {
 	variableValues.put(name, value);
     }

@@ -84,61 +84,61 @@ class AstMaker extends AbstractParseTreeVisitor<AST> implements implVisitor<AST>
 	return new Assignment(v,e);
     }
     
-//    public AST visitOutput(implParser.OutputContext ctx){
-//	Expr e=(Expr)visit(ctx.e);
-//	return new Output(e);
-//    }
+    public AST visitOutput(implParser.OutputContext ctx){
+	Expr e=(Expr)visit(ctx.e);
+	return new Output(e);
+    }
 
-//    public AST visitWhileLoop(implParser.WhileLoopContext ctx){
-//	Condition c=(Condition)visit(ctx.c);
-//	Command body=(Command)visit(ctx.p);
-//	return new While(c,body);
-//    }
-//
-//
-//	public AST visitForLoop(implParser.ForLoopContext ctx){
-//
-//		String str = ctx.s.getText();
-//		Expr e1 = (Expr)visit(ctx.e1);
-//		Expr e2 = (Expr)visit(ctx.e2);
-//		Command body=(Command)visit(ctx.p);
-//
-//		return new Forloop(str, e1, e2, body);
-//	}
-//
-//
-//
-//	public AST visitArray(implParser.ArrayContext ctx){
-//
-//		String s = ctx.s.getText();
-//		Expr index = (Expr)visit(ctx.index);
-//		Expr value = (Expr)visit(ctx.val);
-//
-//		return new Array(s, index, value);
-//	}
-//
-//	public AST visitArrayRead(implParser.ArrayReadContext ctx){
-//
-//		String s = ctx.s.getText();
-//		Expr index = (Expr)visit(ctx.index);
-//
-//		return new ArrayRead(s, index);
-//	}
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//	public AST visitIfStatement(implParser.IfStatementContext ctx){
-//		Condition c=(Condition)visit(ctx.c);
-//		Command body=(Command)visit(ctx.p);
-//		return new IfStatement(c,body);
-//	}
+    public AST visitWhileLoop(implParser.WhileLoopContext ctx){
+	Condition c=(Condition)visit(ctx.c);
+	Command body=(Command)visit(ctx.p);
+	return new While(c,body);
+    }
+
+
+	public AST visitForLoop(implParser.ForLoopContext ctx){
+
+		String str = ctx.s.getText();
+		Expr e1 = (Expr)visit(ctx.e1);
+		Expr e2 = (Expr)visit(ctx.e2);
+		Command body=(Command)visit(ctx.p);
+
+		return new Forloop(str, e1, e2, body);
+	}
+
+
+
+	public AST visitArray(implParser.ArrayContext ctx){
+
+		String s = ctx.s.getText();
+		Expr index = (Expr)visit(ctx.index);
+		Expr value = (Expr)visit(ctx.val);
+
+		return new Array(s, index, value);
+	}
+
+	public AST visitArrayRead(implParser.ArrayReadContext ctx){
+
+		String s = ctx.s.getText();
+		Expr index = (Expr)visit(ctx.index);
+
+		return new ArrayRead(s, index);
+	}
+
+
+
+
+
+
+
+
+
+
+	public AST visitIfStatement(implParser.IfStatementContext ctx){
+		Condition c=(Condition)visit(ctx.c);
+		Command body=(Command)visit(ctx.p);
+		return new IfStatement(c,body);
+	}
 
 
     
@@ -178,8 +178,10 @@ class AstMaker extends AbstractParseTreeVisitor<AST> implements implVisitor<AST>
 
 
     public AST visitConstant(implParser.ConstantContext ctx){
-	return new Constant(ctx.c);
+	return new Constant(new Value(Integer.parseInt(ctx.getText())));
     };
+
+
 
     public AST visitUnequal(implParser.UnequalContext ctx){
 		Expr v1=(Expr)visit(ctx.e1);

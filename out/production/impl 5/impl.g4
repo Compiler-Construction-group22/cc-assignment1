@@ -8,11 +8,12 @@ program : c=command                      # SingleCommand
 	| '{' cs+=command* '}'               # MultipleCommands
 	;
 	
-command : x=ID '=' e=expr ';'	             # Assignment
-	| 'output' e=expr ';'                    # Output
-    | 'while' '('c=condition')' p=program    # WhileLoop
-    | 'for' '(i=' i=expr '..' n=expr ')' p=program    # ForLoop
-    | 'if' '('c=condition')' p=program       # IfStatement
+command : x=ID '=' e=expr ';'	                                 # Assignment
+	| 'output' e=expr ';'                                         # Output
+    | 'while' '('c=condition')' p=program                        # WhileLoop
+    | 'for' '(' s=ID '=' e1=expr '..' e2=expr ')' p=program      # ForLoop
+    | 'if' '('c=condition')' p=program                          # IfStatement
+    | s=ID '[' index=expr ']' ('='val=expr';')                   # Array
 	;
 	
 expr	:  e1=expr '*' e2=expr          # Multiplication
@@ -22,14 +23,15 @@ expr	:  e1=expr '*' e2=expr          # Multiplication
 //	| e1=expr '-' e2=expr # Subtraction
 	| x=ID		                        # Variable
 	| '(' e=expr ')'                    # Parenthesis
+	| s=ID '[' index=expr ']'                                   #ArrayRead
 	;
 
 condition : e1=expr '!=' e2=expr         # Unequal
     | e1=expr '==' e2=expr               # Equal
     | e1=expr '>' e2=expr                # GreaterThan
     | e1=expr '<' e2=expr                # LessThan
+    | c1=condition '&&' c2=condition      # AndBinary
     | e1=condition '||' e2=condition     # OrBinary
-
 	;
 
 ID    : ALPHA (ALPHA|NUM)* ;

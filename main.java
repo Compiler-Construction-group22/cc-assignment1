@@ -1,5 +1,3 @@
-import jdk.dynalink.Operation;
-import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 import org.antlr.v4.runtime.CharStreams;
@@ -8,36 +6,49 @@ import java.io.IOException;
 public class main {
     public static void main(String[] args) throws IOException{
 
-	// we expect exactly one argument: the name of the input file
-	if (args.length!=1) {
-	    System.err.println("\n");
-	    System.err.println("Simple interpreter\n");
-	    System.err.println("==================\n\n");
-	    System.err.println("Please give as input argument a filename\n");
-	    System.exit(-1);
-	}
-	String filename=args[0];
+		// we expect exactly one argument: the name of the input file
+		if (args.length!=1) {
+			System.err.println("\n");
+			System.err.println("Simple interpreter\n");
+			System.err.println("==================\n\n");
+			System.err.println("Please give as input argument a filename\n");
+			System.exit(-1);
+		}
 
-	// open the input file
-	CharStream input = CharStreams.fromFileName(filename);
-	    //new ANTLRFileStream (filename); // depricated
-	
-	// create a lexer/scanner
-	implLexer lex = new implLexer(input);
-	
-	// get the stream of tokens from the scanner
-	CommonTokenStream tokens = new CommonTokenStream(lex);
-	
-	// create a parser
-	implParser parser = new implParser(tokens);
-	
-	// and parse anything from the grammar for "start"
-	ParseTree parseTree = parser.start();
+		String filename=args[0];
 
-	// Construct an interpreter and run it on the parse tree
-	//Interpreter interpreter = new Interpreter();
-	Command p = (Command) new AstMaker().visit(parseTree);
-	p.eval(new Environment());
+		// open the input file
+		CharStream input = CharStreams.fromFileName(filename);
+			//new ANTLRFileStream (filename); // depricated
+
+		// create a lexer/scanner
+		implLexer lex = new implLexer(input);
+
+		// get the stream of tokens from the scanner
+		CommonTokenStream tokens = new CommonTokenStream(lex);
+
+		// create a parser
+		implParser parser = new implParser(tokens);
+
+		// and parse anything from the grammar for "start"
+		ParseTree parseTree = parser.start();
+
+		// Construct an interpreter and run it on the parse tree
+		//Interpreter interpreter = new Interpreter();
+		//Command p = (Command) new AstMaker().visit(parseTree);
+
+		AstMaker astmaker = new AstMaker();
+		AST ast=astmaker.visit(parseTree);
+		System.out.println("Typechecking ... "+ast.typeCheck(new Environment()));
+
+		System.out.println("The result is: "+ast.eval(new Environment()));
+
+
+		//p.eval(new Environment());
+
+
+
+
     }
 }
 
@@ -73,61 +84,61 @@ class AstMaker extends AbstractParseTreeVisitor<AST> implements implVisitor<AST>
 	return new Assignment(v,e);
     }
     
-    public AST visitOutput(implParser.OutputContext ctx){
-	Expr e=(Expr)visit(ctx.e);
-	return new Output(e);
-    }
+//    public AST visitOutput(implParser.OutputContext ctx){
+//	Expr e=(Expr)visit(ctx.e);
+//	return new Output(e);
+//    }
 
-    public AST visitWhileLoop(implParser.WhileLoopContext ctx){
-	Condition c=(Condition)visit(ctx.c);
-	Command body=(Command)visit(ctx.p);
-	return new While(c,body);
-    }
-
-
-	public AST visitForLoop(implParser.ForLoopContext ctx){
-
-		String str = ctx.s.getText();
-		Expr e1 = (Expr)visit(ctx.e1);
-		Expr e2 = (Expr)visit(ctx.e2);
-		Command body=(Command)visit(ctx.p);
-
-		return new Forloop(str, e1, e2, body);
-	}
-
-
-
-	public AST visitArray(implParser.ArrayContext ctx){
-
-		String s = ctx.s.getText();
-		Expr index = (Expr)visit(ctx.index);
-		Expr value = (Expr)visit(ctx.val);
-
-		return new Array(s, index, value);
-	}
-
-	public AST visitArrayRead(implParser.ArrayReadContext ctx){
-
-		String s = ctx.s.getText();
-		Expr index = (Expr)visit(ctx.index);
-
-		return new ArrayRead(s, index);
-	}
-
-
-
-
-
-
-
-
-
-
-	public AST visitIfStatement(implParser.IfStatementContext ctx){
-		Condition c=(Condition)visit(ctx.c);
-		Command body=(Command)visit(ctx.p);
-		return new IfStatement(c,body);
-	}
+//    public AST visitWhileLoop(implParser.WhileLoopContext ctx){
+//	Condition c=(Condition)visit(ctx.c);
+//	Command body=(Command)visit(ctx.p);
+//	return new While(c,body);
+//    }
+//
+//
+//	public AST visitForLoop(implParser.ForLoopContext ctx){
+//
+//		String str = ctx.s.getText();
+//		Expr e1 = (Expr)visit(ctx.e1);
+//		Expr e2 = (Expr)visit(ctx.e2);
+//		Command body=(Command)visit(ctx.p);
+//
+//		return new Forloop(str, e1, e2, body);
+//	}
+//
+//
+//
+//	public AST visitArray(implParser.ArrayContext ctx){
+//
+//		String s = ctx.s.getText();
+//		Expr index = (Expr)visit(ctx.index);
+//		Expr value = (Expr)visit(ctx.val);
+//
+//		return new Array(s, index, value);
+//	}
+//
+//	public AST visitArrayRead(implParser.ArrayReadContext ctx){
+//
+//		String s = ctx.s.getText();
+//		Expr index = (Expr)visit(ctx.index);
+//
+//		return new ArrayRead(s, index);
+//	}
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//	public AST visitIfStatement(implParser.IfStatementContext ctx){
+//		Condition c=(Condition)visit(ctx.c);
+//		Command body=(Command)visit(ctx.p);
+//		return new IfStatement(c,body);
+//	}
 
 
     
@@ -167,7 +178,7 @@ class AstMaker extends AbstractParseTreeVisitor<AST> implements implVisitor<AST>
 
 
     public AST visitConstant(implParser.ConstantContext ctx){
-	return new Constant(Double.parseDouble(ctx.c.getText())); 
+	return new Constant(ctx.c);
     };
 
     public AST visitUnequal(implParser.UnequalContext ctx){

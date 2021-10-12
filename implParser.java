@@ -33,7 +33,7 @@ public class implParser extends Parser {
 		return new String[] {
 			null, "'{'", "'}'", "'='", "';'", "'output'", "'while'", "'('", "')'", 
 			"'for'", "'..'", "'if'", "'['", "']'", "'*'", "'/'", "'+'", "'-'", "'!='", 
-			"'=='", "'>'", "'<'", "'||'", "'&&'"
+			"'=='", "'>'", "'<'", "'&&'", "'||'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
@@ -1111,28 +1111,28 @@ public class implParser extends Parser {
 					switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
 					case 1:
 						{
-						_localctx = new OrBinaryContext(new ConditionContext(_parentctx, _parentState));
-						((OrBinaryContext)_localctx).e1 = _prevctx;
+						_localctx = new AndBinaryContext(new ConditionContext(_parentctx, _parentState));
+						((AndBinaryContext)_localctx).c1 = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_condition);
 						setState(117);
 						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
 						setState(118);
 						match(T__21);
 						setState(119);
-						((OrBinaryContext)_localctx).e2 = condition(3);
+						((AndBinaryContext)_localctx).c2 = condition(3);
 						}
 						break;
 					case 2:
 						{
-						_localctx = new AndBinaryContext(new ConditionContext(_parentctx, _parentState));
-						((AndBinaryContext)_localctx).c1 = _prevctx;
+						_localctx = new OrBinaryContext(new ConditionContext(_parentctx, _parentState));
+						((OrBinaryContext)_localctx).e1 = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_condition);
 						setState(120);
 						if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
 						setState(121);
 						match(T__22);
 						setState(122);
-						((AndBinaryContext)_localctx).c2 = condition(2);
+						((OrBinaryContext)_localctx).e2 = condition(2);
 						}
 						break;
 					}

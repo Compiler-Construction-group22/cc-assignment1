@@ -15,7 +15,7 @@ command : x=ID '=' e=expr ';'	                                 # Assignment
     | 'if' '('c=condition')' p=program                          # IfStatement
     | s=ID '[' index=expr ']' ('='val=expr';')                   # Array
 	;
-	
+
 expr	:  e1=expr '*' e2=expr          # Multiplication
 	| e1=expr '/' e2=expr               # Division
 	| e1=expr  op=('+' | '-') e2=expr   # Addition

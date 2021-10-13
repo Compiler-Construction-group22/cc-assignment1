@@ -113,6 +113,30 @@ public interface implListener extends ParseTreeListener {
 	 */
 	void exitArray(implParser.ArrayContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code Integerdec}
+	 * labeled alternative in {@link implParser#typeid}.
+	 * @param ctx the parse tree
+	 */
+	void enterIntegerdec(implParser.IntegerdecContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Integerdec}
+	 * labeled alternative in {@link implParser#typeid}.
+	 * @param ctx the parse tree
+	 */
+	void exitIntegerdec(implParser.IntegerdecContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Booldec}
+	 * labeled alternative in {@link implParser#typeid}.
+	 * @param ctx the parse tree
+	 */
+	void enterBooldec(implParser.BooldecContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Booldec}
+	 * labeled alternative in {@link implParser#typeid}.
+	 * @param ctx the parse tree
+	 */
+	void exitBooldec(implParser.BooldecContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code Parenthesis}
 	 * labeled alternative in {@link implParser#expr}.
 	 * @param ctx the parse tree

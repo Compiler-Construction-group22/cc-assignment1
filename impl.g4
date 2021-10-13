@@ -8,14 +8,22 @@ program : c=command                      # SingleCommand
 	| '{' cs+=command* '}'               # MultipleCommands
 	;
 	
-command : x=ID '=' e=expr ';'	                                 # Assignment
+command : typeid x=ID '=' e=expr ';'	                                 # Assignment
 	| 'output' e=expr ';'                                         # Output
     | 'while' '('c=condition')' p=program                        # WhileLoop
     | 'for' '(' s=ID '=' e1=expr '..' e2=expr ')' p=program      # ForLoop
     | 'if' '('c=condition')' p=program                          # IfStatement
     | s=ID '[' index=expr ']' ('='val=expr';')                   # Array
 	;
-	
+
+
+typeid  : 'int' ID     # Integerdec
+        | 'bool' ID    # Booldec
+    	;
+
+//typeids : typeid (',' typeid)* ;
+
+
 expr	:  e1=expr '*' e2=expr          # Multiplication
 	| e1=expr '/' e2=expr               # Division
 	| e1=expr  op=('+' | '-') e2=expr   # Addition

@@ -72,6 +72,20 @@ public interface implVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitArray(implParser.ArrayContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code Integerdec}
+	 * labeled alternative in {@link implParser#typeid}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIntegerdec(implParser.IntegerdecContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Booldec}
+	 * labeled alternative in {@link implParser#typeid}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBooldec(implParser.BooldecContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code Parenthesis}
 	 * labeled alternative in {@link implParser#expr}.
 	 * @param ctx the parse tree

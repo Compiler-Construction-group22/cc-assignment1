@@ -195,6 +195,8 @@ class Assignment extends Command{
     @Override
     public void typecheck(Environment env) {
 
+
+        //System.out.println("helloo " + e.eval(env));
         env.setVariable(v, e.eval(env));
 
         //env.setVariable(v, );
@@ -250,7 +252,6 @@ class Forloop extends Command{
     }
     public void eval(Environment env){
 
-        //new Assignment(str, e1);
         double e1Double = e1.eval(env);
         int e1Int = (int) e1Double;
 
@@ -266,9 +267,8 @@ class Forloop extends Command{
 
     @Override
     public void typecheck(Environment env) {
-        env.getVariable(str);
-        e1.typecheck(env);
-        e1.typecheck(env);
+        env.setVariable(str, e1.eval(env));
+       // e1.typecheck(env);
         body.typecheck(env);
     }
 }
@@ -290,9 +290,10 @@ class Array extends Command{
 
     @Override
     public void typecheck(Environment env) {
-        env.getVariable(arrName);
-        index.typecheck(env);
-        value.typecheck(env);
+        String arrNameWithIndex = arrName +"[" + index.eval(env).intValue() + "]";
+        env.setVariable(arrNameWithIndex,value.eval(env) );
+       // index.typecheck(env);
+        //value.typecheck(env);
     }
 
 }
@@ -316,7 +317,8 @@ class ArrayRead extends Expr{
 
     @Override
     public Type typecheck(Environment env) {
-        env.getVariable(arrName);
+        String arrNameWithIndex = arrName +"[" + index.eval(env).intValue() + "]";
+        env.getVariable(arrNameWithIndex);
         return index.typecheck(env);
 
     }

@@ -195,7 +195,9 @@ class Assignment extends Command{
     @Override
     public void typecheck(Environment env) {
 
-       // env.setVariable(v, );
+        env.setVariable(v, e.eval(env));
+
+        //env.setVariable(v, );
         e.typecheck(env);
     }
 }

@@ -43,7 +43,7 @@ public class main {
 
 		//System.out.println("The result is: "+ p.eval(new Environment()));
 
-		p.typecheck(new Environment());
+	//	p.typecheck(new Environment());
 		p.eval(new Environment());
 
 

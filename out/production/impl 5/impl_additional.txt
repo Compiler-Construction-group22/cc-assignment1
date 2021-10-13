@@ -1,13 +1,9 @@
-
-
-
-
-
 /* Example program for impl that tests many the features required in
 the assignment */
 
     n=49;
     k=6;
+    result=1;
 
     while(n!=k && k!=0){
       result=result*n/k;
@@ -15,10 +11,6 @@ the assignment */
       k=k-1;
     }
 
-
-
-
-/*
     output result;
 
     n=100;
@@ -37,8 +29,5 @@ the assignment */
         }
       }
     }
-
-
-*/
 
 

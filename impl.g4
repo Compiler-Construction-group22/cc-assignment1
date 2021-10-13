@@ -26,13 +26,13 @@ expr	:  e1=expr '*' e2=expr          # Multiplication
 	| s=ID '[' index=expr ']'                                   #ArrayRead
 	;
 
-//condition : e1=expr '!=' e2=expr         # Unequal
-//    | e1=expr '==' e2=expr               # Equal
-//    | e1=expr '>' e2=expr                # GreaterThan
-//    | e1=expr '<' e2=expr                # LessThan
-//    | e1=condition '||' e2=condition     # OrBinary
-//    | c1=condition '&&' c2=condition      # AndBinary
-//	;
+condition : e1=expr '!=' e2=expr         # Unequal
+    | e1=expr '==' e2=expr               # Equal
+    | e1=expr '>' e2=expr                # GreaterThan
+    | e1=expr '<' e2=expr                # LessThan
+    | e1=condition '||' e2=condition     # OrBinary
+    | c1=condition '&&' c2=condition      # AndBinary
+	;
 
 ID    : ALPHA (ALPHA|NUM)* ;
 FLOAT : NUM+ ('.' NUM+)? ;

@@ -1,6 +1,11 @@
+
+
+n=c+b;
+output n;
+
 /* Example program for impl that tests many the features required in
 the assignment */
-
+/*
     n=49;
     k=6;
     result=1;
@@ -29,6 +34,8 @@ the assignment */
         }
       }
     }
+*/
+
 
 
 

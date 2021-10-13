@@ -1,11 +1,27 @@
 import java.util.List;
 import java.util.ArrayList;
 
+
+class faux{ // collection of non-OO auxiliary functions (currently just error)
+    public static void error(String msg){
+        System.err.println("Interpreter error: "+msg);
+        System.exit(-1);
+    }
+}
+
+enum Type{
+    INTTYPE, BOOLTYPE
+}
+
+
 public abstract class AST{
+    //abstract public Type typecheck(Environment env);
 };
 
 abstract class Expr extends AST{
     abstract public Double eval(Environment env);
+    abstract public Type typecheck(Environment env);
+
 
 
 }
@@ -18,6 +34,20 @@ class Addition extends Expr{
     }
     public Double eval(Environment env){
         return e1.eval(env)+e2.eval(env);
+
+    }
+
+    @Override
+    public Type typecheck(Environment env) {
+        System.out.println("hello");
+        Type type1 = e1.typecheck(env);
+        Type type2 = e2.typecheck(env);
+        if (type1 == Type.INTTYPE && type2 == Type.INTTYPE) {
+            return Type.INTTYPE;
+        }
+        System.out.println("hello");
+        faux.error("Addition of non-integers ");
+        return null;
     }
 }
 
@@ -27,7 +57,21 @@ class Multiplication extends Expr{
     public Double eval(Environment env){
 	return e1.eval(env)*e2.eval(env);
     }
+
+    @Override
+    public Type typecheck(Environment env) {
+        Type type1 = e1.typecheck(env);
+        Type type2 = e2.typecheck(env);
+        if (type1 == Type.INTTYPE && type2 == Type.INTTYPE) {
+            return Type.INTTYPE;
+        }
+
+         faux.error("Addition of non-integers ");
+        return null;
+    }
 }
+
+
 
 
 class Division extends Expr{
@@ -35,6 +79,18 @@ class Division extends Expr{
     Division(Expr e1,Expr e2){this.e1=e1; this.e2=e2;}
     public Double eval(Environment env){
         return e1.eval(env)/e2.eval(env);
+    }
+
+    @Override
+    public Type typecheck(Environment env) {
+        Type type1 = e1.typecheck(env);
+        Type type2 = e2.typecheck(env);
+        if (type1 == Type.INTTYPE && type2 == Type.INTTYPE) {
+            return Type.INTTYPE;
+        }
+
+        faux.error("Addition of non-integers ");
+        return null;
     }
 }
 
@@ -45,6 +101,18 @@ class Subtraction extends Expr{
     public Double eval(Environment env){
         return e1.eval(env)-e2.eval(env);
     }
+
+    @Override
+    public Type typecheck(Environment env) {
+        Type type1 = e1.typecheck(env);
+        Type type2 = e2.typecheck(env);
+        if (type1 == Type.INTTYPE && type2 == Type.INTTYPE) {
+            return Type.INTTYPE;
+        }
+
+        faux.error("Addition of non-integers ");
+        return null;
+    }
 }
 
 class Constant extends Expr{
@@ -53,31 +121,70 @@ class Constant extends Expr{
     public Double eval(Environment env){
 	return d;
     }
+
+    @Override
+    public Type typecheck(Environment env) {
+//        Type type = Type.valueOf(d.toString());
+//        System.out.println(type);
+
+        if (d instanceof Double) {
+            return Type.INTTYPE;
+        }
+
+        return null;
+    }
 }
 
 class Variable extends Expr{
     String varname;
     Variable(String varname){this.varname=varname;}
     public Double eval(Environment env){
-	return env.getVariable(varname);
+	    return env.getVariable(varname);
+    }
+    @Override
+    public Type typecheck(Environment env) {
+        if(env.getVariable(varname) instanceof Double) {
+            return Type.INTTYPE;
+        }
+
+
+        return null;
     }
 }
 
 abstract class Command extends AST{
     abstract public void eval(Environment env);
+    abstract public void typecheck(Environment env);
 }
 
 // Do nothing command 
 class NOP extends Command{
-    public void eval(Environment env){};
+    public void eval(Environment env){}
+
+    @Override
+    public void typecheck(Environment env) {
+
+    }
 }
 
 class Sequence extends Command{
     Command c1,c2;
-    Sequence(Command c1, Command c2){this.c1=c1; this.c2=c2;}
+    Sequence(Command c1, Command c2){
+        this.c1=c1; this.c2=c2;
+
+    }
     public void eval(Environment env){
-	c1.eval(env);
-	c2.eval(env);
+
+        c1.eval(env);
+        c2.eval(env);
+    }
+
+    @Override
+    public void typecheck(Environment env) {
+
+        c1.typecheck(env);
+        c2.typecheck(env);
+
     }
 }
 
@@ -92,6 +199,12 @@ class Assignment extends Command{
 	Double d=e.eval(env);
 	env.setVariable(v,d);
     }
+
+    @Override
+    public void typecheck(Environment env) {
+
+        e.typecheck(env);
+    }
 }
 
 class Output extends Command{
@@ -102,6 +215,11 @@ class Output extends Command{
     public void eval(Environment env){
 	Double d=e.eval(env);
 	System.out.println(d);
+    }
+
+    @Override
+    public void typecheck(Environment env) {
+        e.typecheck(env);
     }
 }
 
@@ -114,6 +232,12 @@ class While extends Command{
     public void eval(Environment env){
 	while (c.eval(env))
 	    body.eval(env);
+    }
+
+    @Override
+    public void typecheck(Environment env) {
+         c.typecheck(env);
+         body.typecheck(env);
     }
 }
 
@@ -144,6 +268,14 @@ class Forloop extends Command{
         }
 
     }
+
+    @Override
+    public void typecheck(Environment env) {
+        env.getVariable(str);
+        e1.typecheck(env);
+        e1.typecheck(env);
+        body.typecheck(env);
+    }
 }
 
 class Array extends Command{
@@ -159,6 +291,13 @@ class Array extends Command{
     public void eval(Environment env){
         String arrNameWithIndex = arrName +"[" + index.eval(env).intValue() + "]";
         env.setVariable(arrNameWithIndex, value.eval(env));
+    }
+
+    @Override
+    public void typecheck(Environment env) {
+        env.getVariable(arrName);
+        index.typecheck(env);
+        value.typecheck(env);
     }
 
 }
@@ -178,6 +317,13 @@ class ArrayRead extends Expr{
 
         String arrNameWithIndex = arrName +"[" + index.eval(env).intValue() + "]";
         return env.getVariable(arrNameWithIndex);
+    }
+
+    @Override
+    public Type typecheck(Environment env) {
+        env.getVariable(arrName);
+        return index.typecheck(env);
+
     }
 }
 
@@ -199,11 +345,18 @@ class IfStatement extends Command{
             body.eval(env);
         }
     }
+
+    @Override
+    public void typecheck(Environment env) {
+         c.typecheck(env);
+         body.typecheck(env);
+    }
 }
 
 
 abstract class Condition extends AST{
     abstract public Boolean eval(Environment env);
+    abstract public Type typecheck(Environment env);
 }
 
 class Unequal extends Condition{
@@ -211,6 +364,10 @@ class Unequal extends Condition{
     Unequal(Expr e1,Expr e2){this.e1=e1; this.e2=e2;}
     public Boolean eval(Environment env){
 	return ! e1.eval(env).equals(e2.eval(env));
+    }
+    @Override
+    public Type typecheck(Environment env) {
+        return null;
     }
  
 }
@@ -223,6 +380,11 @@ class Equal extends Condition{
 
     public Boolean eval(Environment env){
         return e1.eval(env).equals(e2.eval(env));
+    }
+
+    @Override
+    public Type typecheck(Environment env) {
+        return null;
     }
 
 }
@@ -240,8 +402,13 @@ class GreaterThan extends Condition{
         if (e1.eval(env) > e2.eval(env)) {
             result = true;
         }
-
         return result;
+    }
+
+
+    @Override
+    public Type typecheck(Environment env) {
+        return null;
     }
 
 }
@@ -260,6 +427,11 @@ class LessThan extends Condition{
             result = true;
         }
         return result;
+    }
+
+    @Override
+    public Type typecheck(Environment env) {
+        return null;
     }
 }
 
@@ -280,6 +452,11 @@ class OrBinary extends Condition{
         }
         return result;
     }
+
+    @Override
+    public Type typecheck(Environment env) {
+        return null;
+    }
 }
 
 
@@ -295,6 +472,11 @@ class AndBinary extends Condition{
             result = true;
         }
         return result;
+    }
+
+    @Override
+    public Type typecheck(Environment env) {
+        return null;
     }
 }
 

@@ -36,9 +36,19 @@ public class main {
 
 	// Construct an interpreter and run it on the parse tree
 	//Interpreter interpreter = new Interpreter();
-	Command p = (Command) new AstMaker().visit(parseTree);
-	p.eval(new Environment());
+
+		Command p = (Command) new AstMaker().visit(parseTree);
+
+		//System.out.println("Typechecking ... "+p.typecheck(new Environment()));
+
+		//System.out.println("The result is: "+ p.eval(new Environment()));
+
+		p.typecheck(new Environment());
+		p.eval(new Environment());
+
+
     }
+
 }
 
 // We write an interpreter that implements interface

@@ -1,7 +1,3 @@
-import java.util.List;
-import java.util.ArrayList;
-
-
 class faux{ // collection of non-OO auxiliary functions (currently just error)
     public static void error(String msg){
         System.err.println("Interpreter error: "+msg);
@@ -10,7 +6,7 @@ class faux{ // collection of non-OO auxiliary functions (currently just error)
 }
 
 enum Type{
-    INTTYPE, BOOLTYPE
+    DOUBLE_TYPE, BOOLTYPE
 }
 
 
@@ -39,13 +35,13 @@ class Addition extends Expr{
 
     @Override
     public Type typecheck(Environment env) {
-        System.out.println("hello");
+
         Type type1 = e1.typecheck(env);
         Type type2 = e2.typecheck(env);
-        if (type1 == Type.INTTYPE && type2 == Type.INTTYPE) {
-            return Type.INTTYPE;
+        if (type1 == Type.DOUBLE_TYPE && type2 == Type.DOUBLE_TYPE) {
+            return Type.DOUBLE_TYPE;
         }
-        System.out.println("hello");
+
         faux.error("Addition of non-integers ");
         return null;
     }
@@ -62,11 +58,11 @@ class Multiplication extends Expr{
     public Type typecheck(Environment env) {
         Type type1 = e1.typecheck(env);
         Type type2 = e2.typecheck(env);
-        if (type1 == Type.INTTYPE && type2 == Type.INTTYPE) {
-            return Type.INTTYPE;
+        if (type1 == Type.DOUBLE_TYPE && type2 == Type.DOUBLE_TYPE) {
+            return Type.DOUBLE_TYPE;
         }
 
-         faux.error("Addition of non-integers ");
+         faux.error("Multiplication of non-integers ");
         return null;
     }
 }
@@ -85,11 +81,11 @@ class Division extends Expr{
     public Type typecheck(Environment env) {
         Type type1 = e1.typecheck(env);
         Type type2 = e2.typecheck(env);
-        if (type1 == Type.INTTYPE && type2 == Type.INTTYPE) {
-            return Type.INTTYPE;
+        if (type1 == Type.DOUBLE_TYPE && type2 == Type.DOUBLE_TYPE) {
+            return Type.DOUBLE_TYPE;
         }
 
-        faux.error("Addition of non-integers ");
+        faux.error("Division of non-integers ");
         return null;
     }
 }
@@ -106,11 +102,11 @@ class Subtraction extends Expr{
     public Type typecheck(Environment env) {
         Type type1 = e1.typecheck(env);
         Type type2 = e2.typecheck(env);
-        if (type1 == Type.INTTYPE && type2 == Type.INTTYPE) {
-            return Type.INTTYPE;
+        if (type1 == Type.DOUBLE_TYPE && type2 == Type.DOUBLE_TYPE) {
+            return Type.DOUBLE_TYPE;
         }
 
-        faux.error("Addition of non-integers ");
+        faux.error("Subtraction of non-integers ");
         return null;
     }
 }
@@ -124,11 +120,8 @@ class Constant extends Expr{
 
     @Override
     public Type typecheck(Environment env) {
-//        Type type = Type.valueOf(d.toString());
-//        System.out.println(type);
-
         if (d instanceof Double) {
-            return Type.INTTYPE;
+            return Type.DOUBLE_TYPE;
         }
 
         return null;
@@ -136,17 +129,16 @@ class Constant extends Expr{
 }
 
 class Variable extends Expr{
-    String varname;
-    Variable(String varname){this.varname=varname;}
+    String varName;
+    Variable(String varName){this.varName = varName;}
     public Double eval(Environment env){
-	    return env.getVariable(varname);
+	    return env.getVariable(varName);
     }
     @Override
     public Type typecheck(Environment env) {
-        if(env.getVariable(varname) instanceof Double) {
-            return Type.INTTYPE;
+        if(env.getVariable(varName) instanceof Double) {
+            return Type.DOUBLE_TYPE;
         }
-
 
         return null;
     }
@@ -202,6 +194,7 @@ class Assignment extends Command{
 
     @Override
     public void typecheck(Environment env) {
+
 
         e.typecheck(env);
     }

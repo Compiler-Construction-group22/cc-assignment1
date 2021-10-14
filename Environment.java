@@ -13,7 +13,7 @@ class Environment {
 	Double value = variableValues.get(name); 
 	if (value == null) {
 		System.err.println("Variable not defined: "+name);
-		System.exit(-1);
+		//System.exit(-1);
 	}
 	return value;
     }

@@ -194,13 +194,8 @@ class Assignment extends Command{
 
     @Override
     public void typecheck(Environment env) {
-
-
-        //System.out.println("helloo " + e.eval(env));
-        env.setVariable(v, e.eval(env));
-
-        //env.setVariable(v, );
         e.typecheck(env);
+        env.setVariable(v, e.eval(env));
     }
 }
 
@@ -290,10 +285,11 @@ class Array extends Command{
 
     @Override
     public void typecheck(Environment env) {
+        value.typecheck(env);
         String arrNameWithIndex = arrName +"[" + index.eval(env).intValue() + "]";
         env.setVariable(arrNameWithIndex,value.eval(env) );
-       // index.typecheck(env);
-        //value.typecheck(env);
+
+
     }
 
 }
@@ -317,9 +313,20 @@ class ArrayRead extends Expr{
 
     @Override
     public Type typecheck(Environment env) {
+        if (env.getVariable(arrName) instanceof Double) {
+            faux.error(arrName + " was defined as double, now used as array");
+        }
+
         String arrNameWithIndex = arrName +"[" + index.eval(env).intValue() + "]";
-        env.getVariable(arrNameWithIndex);
-        return index.typecheck(env);
+        Double value = env.getVariable(arrNameWithIndex);
+        if (value instanceof Double) {
+            return Type.DOUBLE_TYPE;
+        } else {
+            faux.error("Array " + arrNameWithIndex + " not defined");
+        }
+
+        return null;
+       // return index.typecheck(env);
 
     }
 }

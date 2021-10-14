@@ -136,6 +136,9 @@ class Variable extends Expr{
     }
     @Override
     public Type typecheck(Environment env) {
+        if (env.getArrayNames().contains(varName)){
+            faux.error(varName + " was defined as array, now used as double");
+        }
         if(env.getVariable(varName) instanceof Double) {
             return Type.DOUBLE_TYPE;
         }
@@ -288,7 +291,7 @@ class Array extends Command{
         value.typecheck(env);
         String arrNameWithIndex = arrName +"[" + index.eval(env).intValue() + "]";
         env.setVariable(arrNameWithIndex,value.eval(env) );
-
+        env.setArrayName(arrName);
 
     }
 
@@ -330,10 +333,6 @@ class ArrayRead extends Expr{
 
     }
 }
-
-
-
-
 
 
 

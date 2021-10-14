@@ -16,7 +16,7 @@ public abstract class AST{
 
 abstract class Expr extends AST{
     abstract public Double eval(Environment env);
-    abstract public Type typecheck(Environment env);
+    abstract public Type typeCheck(Environment env);
 
 
 
@@ -25,6 +25,7 @@ abstract class Expr extends AST{
 class Addition extends Expr{
     Expr e1,e2;
     Addition(Expr e1,Expr e2){
+
         this.e1=e1;
         this.e2=e2;
     }
@@ -34,10 +35,10 @@ class Addition extends Expr{
     }
 
     @Override
-    public Type typecheck(Environment env) {
+    public Type typeCheck(Environment env) {
 
-        Type type1 = e1.typecheck(env);
-        Type type2 = e2.typecheck(env);
+        Type type1 = e1.typeCheck(env);
+        Type type2 = e2.typeCheck(env);
         if (type1 == Type.DOUBLE_TYPE && type2 == Type.DOUBLE_TYPE) {
             return Type.DOUBLE_TYPE;
         }
@@ -55,9 +56,9 @@ class Multiplication extends Expr{
     }
 
     @Override
-    public Type typecheck(Environment env) {
-        Type type1 = e1.typecheck(env);
-        Type type2 = e2.typecheck(env);
+    public Type typeCheck(Environment env) {
+        Type type1 = e1.typeCheck(env);
+        Type type2 = e2.typeCheck(env);
         if (type1 == Type.DOUBLE_TYPE && type2 == Type.DOUBLE_TYPE) {
             return Type.DOUBLE_TYPE;
         }
@@ -69,7 +70,6 @@ class Multiplication extends Expr{
 
 
 
-
 class Division extends Expr{
     Expr e1,e2;
     Division(Expr e1,Expr e2){this.e1=e1; this.e2=e2;}
@@ -78,9 +78,9 @@ class Division extends Expr{
     }
 
     @Override
-    public Type typecheck(Environment env) {
-        Type type1 = e1.typecheck(env);
-        Type type2 = e2.typecheck(env);
+    public Type typeCheck(Environment env) {
+        Type type1 = e1.typeCheck(env);
+        Type type2 = e2.typeCheck(env);
         if (type1 == Type.DOUBLE_TYPE && type2 == Type.DOUBLE_TYPE) {
             return Type.DOUBLE_TYPE;
         }
@@ -99,9 +99,9 @@ class Subtraction extends Expr{
     }
 
     @Override
-    public Type typecheck(Environment env) {
-        Type type1 = e1.typecheck(env);
-        Type type2 = e2.typecheck(env);
+    public Type typeCheck(Environment env) {
+        Type type1 = e1.typeCheck(env);
+        Type type2 = e2.typeCheck(env);
         if (type1 == Type.DOUBLE_TYPE && type2 == Type.DOUBLE_TYPE) {
             return Type.DOUBLE_TYPE;
         }
@@ -119,7 +119,7 @@ class Constant extends Expr{
     }
 
     @Override
-    public Type typecheck(Environment env) {
+    public Type typeCheck(Environment env) {
         if (d instanceof Double) {
             return Type.DOUBLE_TYPE;
         }
@@ -135,7 +135,7 @@ class Variable extends Expr{
 	    return env.getVariable(varName);
     }
     @Override
-    public Type typecheck(Environment env) {
+    public Type typeCheck(Environment env) {
         if (env.getArrayNames().contains(varName)){
             faux.error(varName + " was defined as array, now used as double");
         }
@@ -149,7 +149,7 @@ class Variable extends Expr{
 
 abstract class Command extends AST{
     abstract public void eval(Environment env);
-    abstract public void typecheck(Environment env);
+    abstract public void typeCheck(Environment env);
 }
 
 // Do nothing command 
@@ -157,7 +157,7 @@ class NOP extends Command{
     public void eval(Environment env){}
 
     @Override
-    public void typecheck(Environment env) {
+    public void typeCheck(Environment env) {
 
     }
 }
@@ -175,10 +175,10 @@ class Sequence extends Command{
     }
 
     @Override
-    public void typecheck(Environment env) {
+    public void typeCheck(Environment env) {
 
-        c1.typecheck(env);
-        c2.typecheck(env);
+        c1.typeCheck(env);
+        c2.typeCheck(env);
 
     }
 }
@@ -196,8 +196,8 @@ class Assignment extends Command{
     }
 
     @Override
-    public void typecheck(Environment env) {
-        e.typecheck(env);
+    public void typeCheck(Environment env) {
+        e.typeCheck(env);
         env.setVariable(v, e.eval(env));
     }
 }
@@ -213,8 +213,8 @@ class Output extends Command{
     }
 
     @Override
-    public void typecheck(Environment env) {
-        e.typecheck(env);
+    public void typeCheck(Environment env) {
+        e.typeCheck(env);
     }
 }
 
@@ -230,9 +230,9 @@ class While extends Command{
     }
 
     @Override
-    public void typecheck(Environment env) {
-         c.typecheck(env);
-         body.typecheck(env);
+    public void typeCheck(Environment env) {
+         c.typeCheck(env);
+         body.typeCheck(env);
     }
 }
 
@@ -264,10 +264,10 @@ class Forloop extends Command{
     }
 
     @Override
-    public void typecheck(Environment env) {
+    public void typeCheck(Environment env) {
         env.setVariable(str, e1.eval(env));
        // e1.typecheck(env);
-        body.typecheck(env);
+        body.typeCheck(env);
     }
 }
 
@@ -287,8 +287,8 @@ class Array extends Command{
     }
 
     @Override
-    public void typecheck(Environment env) {
-        value.typecheck(env);
+    public void typeCheck(Environment env) {
+        value.typeCheck(env);
         String arrNameWithIndex = arrName +"[" + index.eval(env).intValue() + "]";
         env.setVariable(arrNameWithIndex,value.eval(env) );
         env.setArrayName(arrName);
@@ -315,7 +315,7 @@ class ArrayRead extends Expr{
     }
 
     @Override
-    public Type typecheck(Environment env) {
+    public Type typeCheck(Environment env) {
         if (env.getVariable(arrName) instanceof Double) {
             faux.error(arrName + " was defined as double, now used as array");
         }
@@ -350,16 +350,16 @@ class IfStatement extends Command{
     }
 
     @Override
-    public void typecheck(Environment env) {
-         c.typecheck(env);
-         body.typecheck(env);
+    public void typeCheck(Environment env) {
+         c.typeCheck(env);
+         body.typeCheck(env);
     }
 }
 
 
 abstract class Condition extends AST{
     abstract public Boolean eval(Environment env);
-    abstract public Type typecheck(Environment env);
+    abstract public Type typeCheck(Environment env);
 }
 
 class Unequal extends Condition{
@@ -369,7 +369,7 @@ class Unequal extends Condition{
 	return ! e1.eval(env).equals(e2.eval(env));
     }
     @Override
-    public Type typecheck(Environment env) {
+    public Type typeCheck(Environment env) {
         return null;
     }
  
@@ -386,7 +386,7 @@ class Equal extends Condition{
     }
 
     @Override
-    public Type typecheck(Environment env) {
+    public Type typeCheck(Environment env) {
         return null;
     }
 
@@ -410,7 +410,7 @@ class GreaterThan extends Condition{
 
 
     @Override
-    public Type typecheck(Environment env) {
+    public Type typeCheck(Environment env) {
         return null;
     }
 
@@ -433,7 +433,7 @@ class LessThan extends Condition{
     }
 
     @Override
-    public Type typecheck(Environment env) {
+    public Type typeCheck(Environment env) {
         return null;
     }
 }
@@ -457,7 +457,7 @@ class OrBinary extends Condition{
     }
 
     @Override
-    public Type typecheck(Environment env) {
+    public Type typeCheck(Environment env) {
         return null;
     }
 }
@@ -478,7 +478,7 @@ class AndBinary extends Condition{
     }
 
     @Override
-    public Type typecheck(Environment env) {
+    public Type typeCheck(Environment env) {
         return null;
     }
 }

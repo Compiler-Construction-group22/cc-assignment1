@@ -31,6 +31,4 @@ for(i=2..n){
 }
 
 
-output a;
-
 

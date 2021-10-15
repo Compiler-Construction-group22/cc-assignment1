@@ -12,10 +12,10 @@ class Environment {
     
     public Double getVariable(String name){
 	Double value = variableValues.get(name); 
-	if (value == null) {
-		System.err.println("Variable not defined: "+name);
-		//System.exit(-1);
-	}
+//	if (value == null) {
+//		System.err.println("Variable not defined: "+name);
+//		//System.exit(-1);
+//	}
 	return value;
     }
 

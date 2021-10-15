@@ -1,8 +1,4 @@
 
-
-
-
-
 /* Example program for impl that tests many the features required in
 the assignment */
 
@@ -36,16 +32,12 @@ the assignment */
     }
 
 
-
-
-
-
 // scenario 1
 //  x=y;
 
 // scenario 2
-//  y = 1;
-//  z[1] = y[1];
+  y = 1;
+  z[1] = y[1];
 
 
 // scenario 3

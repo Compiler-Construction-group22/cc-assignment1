@@ -141,6 +141,9 @@ class Variable extends Expr{
         }
         if(env.getVariable(varName) instanceof Double) {
             return Type.DOUBLE_TYPE;
+
+        } else {
+            faux.error(varName + " not defined ");
         }
 
         return null;
@@ -198,7 +201,16 @@ class Assignment extends Command{
     @Override
     public void typeCheck(Environment env) {
         e.typeCheck(env);
+
+        if (!(e.eval(env) instanceof Double)) {
+            faux.error(v +" not defined ");
+        }
+
+        if (env.getArrayNames().contains(v)) {
+            faux.error( v + " was defined as array, now used as double ");
+        }
         env.setVariable(v, e.eval(env));
+
     }
 }
 
@@ -288,7 +300,7 @@ class Array extends Command{
 
     @Override
     public void typeCheck(Environment env) {
-        if (env.getVariable(arrName) instanceof Double) {
+        if (env.containsValue(arrName)) {
             faux.error(arrName +" was defined as a double, used as array ");
         }
         value.typeCheck(env);

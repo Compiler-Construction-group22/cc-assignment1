@@ -37,11 +37,11 @@ public class main {
 
 		Command p = (Command) new AstMaker().visit(parseTree);
 
-		//System.out.println("Typechecking ... "+p.typecheck(new Environment()));
-
-		//System.out.println("The result is: "+ p.eval(new Environment()));
-
+		System.out.println("Typechecking... \n");
 		p.typeCheck(new Environment());
+		System.out.println("Typechecking completed");
+
+		System.out.println("Program executing... ");
 		p.eval(new Environment());
 
     }

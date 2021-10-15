@@ -288,11 +288,13 @@ class Array extends Command{
 
     @Override
     public void typeCheck(Environment env) {
+        if (env.getVariable(arrName) instanceof Double) {
+            faux.error(arrName +" was defined as a double, used as array ");
+        }
         value.typeCheck(env);
         String arrNameWithIndex = arrName +"[" + index.eval(env).intValue() + "]";
         env.setVariable(arrNameWithIndex,value.eval(env) );
         env.setArrayName(arrName);
-
     }
 
 }
